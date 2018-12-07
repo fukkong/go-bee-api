@@ -8,11 +8,18 @@
 package routers
 
 import (
+	"go-bee-restful/controllers"
+
 	"github.com/astaxie/beego"
 )
 
 func init() {
 	ns := beego.NewNamespace("/v1",
+		beego.NSNamespace("/car",
+			beego.NSInclude(
+				&controllers.CarController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }
