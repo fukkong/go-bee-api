@@ -1,0 +1,192 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "beego Test API",
+        "description": "beego has a very cool tools to autogenerate documents for your API",
+        "version": "1.0.0",
+        "termsOfService": "http://beego.me/",
+        "contact": {
+            "email": "astaxie@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "basePath": "/v1",
+    "paths": {
+        "/car/": {
+            "get": {
+                "tags": [
+                    "car"
+                ],
+                "description": "get all objects",
+                "operationId": "CarController.GetAll",
+                "responses": {
+                    "200": {
+                        "description": "{Car} models.Car"
+                    },
+                    "403": {
+                        "description": ":Carid is empty"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "car"
+                ],
+                "description": "create object",
+                "operationId": "CarController.Create",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The car content",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Car"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string} models.Car.Carid"
+                    },
+                    "403": {
+                        "description": "body is empty"
+                    }
+                }
+            }
+        },
+        "/car/{Carid}": {
+            "get": {
+                "tags": [
+                    "car"
+                ],
+                "description": "find object by objectid",
+                "operationId": "CarController.Get",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "Carid",
+                        "description": "the Carid you want to get",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{Car} models.Car"
+                    },
+                    "403": {
+                        "description": ":Carid is empty"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "car"
+                ],
+                "description": "update the object",
+                "operationId": "CarController.Update",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "Carid",
+                        "description": "The carId you want to update",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "The body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Car"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{car} models.Car"
+                    },
+                    "403": {
+                        "description": ":Carid is empty"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "car"
+                ],
+                "description": "delete the car",
+                "operationId": "CarController.Delete",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "Carid",
+                        "description": "The carId you want to delete",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{string} delete success!"
+                    },
+                    "403": {
+                        "description": "Carid is empty"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Car": {
+            "title": "Car",
+            "type": "object",
+            "properties": {
+                "Booked": {
+                    "type": "boolean"
+                },
+                "Carid": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Listed": {
+                    "type": "boolean"
+                },
+                "Maker": {
+                    "type": "string"
+                },
+                "Model": {
+                    "type": "string"
+                },
+                "Msrp": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "Status": {
+                    "type": "string"
+                },
+                "Vin": {
+                    "type": "string"
+                },
+                "Year": {
+                    "type": "integer",
+                    "format": "int32"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "car",
+            "description": "Operations about object\n"
+        }
+    ]
+}
