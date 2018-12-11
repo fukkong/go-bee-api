@@ -15,24 +15,24 @@ type CarController struct {
 
 // @Title Create
 // @Description create object
-// @Param	body		body 	models.Object	true		"The object content"
-// @Success 200 {string} models.Object.Id
+// @Param	body		body 	models.Car	true		"The car content"
+// @Success 200 {string} models.Car.Carid
 // @Failure 403 body is empty
 // @router / [post]
 func (c *CarController) Post() {
 	var ca models.Car
 	json.Unmarshal(c.Ctx.Input.RequestBody, &ca)
 	carId := models.AddOneCar(ca)
-	c.Data["json"] = map[string]int{"Id": carId}
+	c.Data["json"] = map[string]int{"Carid": carId}
 	c.ServeJSON()
 }
 
 // @Title Get
 // @Description find object by objectid
-// @Param	ID		path 	int	true		"the objectid you want to get"
-// @Success 200 {car} models.Car
-// @Failure 403 :Id is empty
-// @router /:Id [get]
+// @Param	Carid		path 	int	true		"the Carid you want to get"
+// @Success 200 {Car} models.Car
+// @Failure 403 :Carid is empty
+// @router /:Carid [get]
 func (c *CarController) Get() {
 	carId := c.Ctx.Input.Param(":carid")
 	if carId != "" {
@@ -46,31 +46,27 @@ func (c *CarController) Get() {
 			}
 		}
 	}
-	c.Ctx.ResponseWriter.Header().Add("Access-Control-Allow-Origin","*")
-	c.Ctx.ResponseWriter.Header().Add("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept")
 	c.ServeJSON()
 }
 
 // @Title GetAll
 // @Description get all objects
-// @Success 200 {object} models.Car
-// @Failure 403 :Id is empty
+// @Success 200 {Car} models.Car
+// @Failure 403 :Carid is empty
 // @router / [get]
 func (c *CarController) GetAll() {
 	cs := models.GetAllCar()
 	c.Data["json"] = cs
-	c.Ctx.ResponseWriter.Header().Add("Access-Control-Allow-Origin","*")
-	c.Ctx.ResponseWriter.Header().Add("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept")
 	c.ServeJSON()
 }
 
 // @Title Update
 // @Description update the object
-// @Param	Id		path 	int	true		"The objectid you want to update"
-// @Param	body		body 	models.Object	true		"The body"
-// @Success 200 {object} models.Object
-// @Failure 403 :objectId is empty
-// @router /:Id [put]
+// @Param	Carid		path 	int	true		"The carId you want to update"
+// @Param	body		body 	models.Car	true		"The body"
+// @Success 200 {car} models.Car
+// @Failure 403 :Carid is empty
+// @router /:Carid [put]
 func (c *CarController) Put() {
 	var ca models.Car
 	json.Unmarshal(c.Ctx.Input.RequestBody, &ca)
@@ -86,12 +82,12 @@ func (c *CarController) Put() {
 
 // @Title Delete
 // @Description delete the car
-// @Param	Id		path 	int	true		"The objectId you want to delete"
+// @Param	Carid		path 	int	true		"The carId you want to delete"
 // @Success 200 {string} delete success!
-// @Failure 403 Id is empty
-// @router /:Id [delete]
+// @Failure 403 Carid is empty
+// @router /:Carid [delete]
 func (c *CarController) Delete() {
-	carId := c.Ctx.Input.Param(":Id")
+	carId := c.Ctx.Input.Param(":Carid")
 	ids, errs := strconv.ParseInt(carId, 10, 64)
 	if errs == nil {
 		models.DeleteCar(int(ids))
